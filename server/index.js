@@ -1,5 +1,7 @@
 
-var humm =  Meteor.npmRequire('humm');
+var humm =  Meteor.npmRequire('humm'),
+    Future = Npm.require('fibers/future');
+
 /*
 //init humm
 humm.init({
@@ -9,7 +11,7 @@ humm.init({
 
 
 var radios = Async.runSync(function(done) {
-    humm.radio(function(error, response) {
+    humm.users.me(function(error, response) {
         console.log('------------- accessViaCodeGrant complete -------------');
         console.log(error);
         console.log(response);
@@ -19,7 +21,8 @@ var radios = Async.runSync(function(done) {
     });
 });
 
-console.log(radios);*/
+console.log(radios);
+*/
 
 
 
@@ -43,6 +46,22 @@ Meteor.methods({
 
         console.log(parsedCode);
 
+
+        var future = new Future;
+
+        humm.accessViaCodeGrant(parsedCode.data, Meteor.bindEnvironment(function(error, response) {
+            console.log('------------- accessViaCodeGrant complete -------------');
+            console.log(error);
+            console.log(response);
+
+            if (error) {
+                return future.error(error);
+            }
+            future.return(response);
+        }));
+
+        return future.wait();
+/*
         var result = Async.runSync(function(done) {
             humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
                 console.log('------------- accessViaCodeGrant complete -------------');
@@ -54,43 +73,10 @@ Meteor.methods({
             });
         });
 
-
         console.log(result);
 
+        return result;*/
 
-/*
-        //show pop up to enable user to login to hum
-        humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
-            console.log('------------- accessViaCodeGrant complete -------------');
-            console.log(error);
-            console.log(response);
-
-     */
-/*       //set access token
-            humm.setAccessToken(token);
-
-            //
-            humm.users.me(function(err, res){
-                console.log('--------------------- users.me()----------');
-                console.log(res);
-            });*//*
-
-        });
-
-*/
-
- /*       var radios = Async.runSync(function(done) {
-            humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
-                console.log('------------- accessViaCodeGrant complete -------------');
-                console.log(error);
-                console.log(response);
-
-                done(error, response);
-
-            });
-        });
-
-        return radios;*/
 
 
     }
