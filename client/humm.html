@@ -2,14 +2,33 @@
 
     <h1> This is an example of Authorization Code Flow </h1>
 
-    {{#if isLoggedIn}}
-        <h2> Logged in user: </h2>
+    {{#if loggedViaCode}}
+        <h2> Me </h2>
+        {{meViaCode}}
+        <h2> Me </h2>
+        <img src="{{meViaCode.account.uavatar}}">
+        <p>{{meViaCode.account.uname}}</p>
+        <p>{{meViaCode.account.email}}</p>
+        <p>{{meViaCode.account.bio}}</p>
     {{else}}
-        <button id="login"> Log in using Humm</button>
+        <button id="login-via-auth-code"> Log in using Humm</button>
     {{/if}}
 
-</template>
 
-<template name="completeAuth">
-    This will auto close
+    <h1> This is an example of Implicit Grant Flow </h1>
+
+    {{#if loggedViaImplicit}}
+        <h2> Me </h2>
+        <img src="{{meViaImplicit.account.uavatar}}">
+        <p>{{meViaImplicit.account.uname}}</p>
+        <p>{{meViaImplicit.account.email}}</p>
+        <p>{{meViaImplicit.account.bio}}</p>
+    {{else}}
+        <button id="login-via-implicit-grant"> Log in using Humm</button>
+    {{/if}}
+
+
+    <h1> This is an example of Client Credentials Requests </h1>
+    <button id="login-via-implicit-grant"> Get Song with id 557ecbf86a64fc1b8bed533f</button>
+
 </template>

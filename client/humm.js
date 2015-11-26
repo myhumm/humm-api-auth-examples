@@ -1,30 +1,35 @@
 
-var isLoggedIn = new ReactiveVar(false),
-    me;
+Template.humm.onCreated(function () {
+    this.loggedViaCode = new ReactiveVar(false);
+    this.meViaCode = {};
 
+    this.loggedViaImplicit = new ReactiveVar(false);
+    this.meViaImplicit = {};
 
-Template.completeAuth.onRendered(function () {
-
-    console.log('-------------Rendered----------');
-    console.log(window.location);
-    humm.completeAuthorization(window.location);
 });
 
 Template.humm.helpers({
-    isLoggedIn: function isLoggedIn(){
-        return isLoggedIn.get();
+    loggedViaCode: function loggedViaCode(){
+        return Template.instance().loggedViaCode.get();
     },
 
-    me: function me() {
-        return me;
+    meViaCode: function meViaCode() {
+        return Template.instance().meViaCode;
+    },
+
+    loggedViaImplicit: function loggedViaImplicit(){
+        return Template.instance().loggedViaImplicit.get();
+    },
+
+    meViaImplicit: function meViaImplicit() {
+        return Template.instance().meViaImplicit;
     }
 });
 
 Template.humm.events({
-    'click #login': function login(){
+    'click #login-via-auth-code': function loginViaCode(){
         console.log('------------------- Starting Auth via auth code follow ------------------- ');
         console.log(humm);
-
 
         // init humm  with client_id
         humm.init({ client_id: '56570bacae8c5087411778a3' });
@@ -39,8 +44,32 @@ Template.humm.events({
             Meteor.call('getMe', response.code, function(err, res) {
                 console.log(err);
                 console.log(res);
-            //    res.data_response;
             })
+        });
+
+    },
+
+    'click #login-via-implicit-grant': function loginViaImplicitGrant(event, template){
+        console.log('------------------- Starting Auth via implicit grant follow ------------------- ');
+
+        // init humm  with client_id
+        humm.init({ client_id: '56570bacae8c5087411778a3' });
+
+        //show pop up to enable user to login to hum
+        humm.authViaImplicitGrant(function(error, response) {
+            console.log('------------- authViaImplicitGrant complete -------------');
+            console.log(error);
+            console.log(response);
+
+            //show pop up to enable user to login to hum
+            humm.users.me(function(error, response) {
+                console.log('------------- user.me() complete -------------');
+                console.log(error);
+                console.log(response);
+                template.loggedViaImplicit.set(true);
+                console.log(response.data_response);
+                template.meViaImplicit = response.data_response;
+            });
         });
 
     }

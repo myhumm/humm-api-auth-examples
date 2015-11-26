@@ -7,9 +7,7 @@ Router.route('/', {
 
 Router.route('/complete-auth', {
     action: function () {
-        console.log('-----------Auth Redirect----------');
-        console.log(window.location);
-        this.render('completeAuth');
+        humm.completeAuthorization(window.location);
     }
 });
 

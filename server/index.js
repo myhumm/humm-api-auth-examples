@@ -1,4 +1,28 @@
 
+var humm =  Meteor.npmRequire('humm');
+/*
+//init humm
+humm.init({
+    client_id: '56570bacae8c5087411778a3',
+    client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
+});
+
+
+var radios = Async.runSync(function(done) {
+    humm.radio(function(error, response) {
+        console.log('------------- accessViaCodeGrant complete -------------');
+        console.log(error);
+        console.log(response);
+
+        done(error, response);
+
+    });
+});
+
+console.log(radios);*/
+
+
+
 
 Meteor.methods({
 
@@ -19,21 +43,55 @@ Meteor.methods({
 
         console.log(parsedCode);
 
+        var result = Async.runSync(function(done) {
+            humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
+                console.log('------------- accessViaCodeGrant complete -------------');
+                console.log(error);
+                console.log(response);
+
+                done(error, response);
+
+            });
+        });
+
+
+        console.log(result);
+
+
+/*
         //show pop up to enable user to login to hum
         humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
             console.log('------------- accessViaCodeGrant complete -------------');
             console.log(error);
             console.log(response);
 
-     /*       //set access token
+     */
+/*       //set access token
             humm.setAccessToken(token);
 
             //
             humm.users.me(function(err, res){
                 console.log('--------------------- users.me()----------');
                 console.log(res);
-            });*/
+            });*//*
+
         });
+
+*/
+
+ /*       var radios = Async.runSync(function(done) {
+            humm.accessViaCodeGrant(parsedCode.data, function(error, response) {
+                console.log('------------- accessViaCodeGrant complete -------------');
+                console.log(error);
+                console.log(response);
+
+                done(error, response);
+
+            });
+        });
+
+        return radios;*/
+
 
     }
 });
