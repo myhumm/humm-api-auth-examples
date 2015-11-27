@@ -1,0 +1,13 @@
+{
+  "author": "Mohamed Badr",
+  "name": "web-api-code-example",
+  "description": "Basic examples of the Humm authorization flows through oAuth2",
+  "version": "0.0.1",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "~4.0.0",
+    "humm": "0.0.3",
+    "request": "^2.67.0"
+  }
+}
