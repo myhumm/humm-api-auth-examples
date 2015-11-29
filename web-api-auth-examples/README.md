@@ -1,9 +1,8 @@
-# Spotify Accounts Authentication Examples
+# Humm Accounts Authentication Examples
 
 
 
 ## Installation
-
 
 
 ## Running the examples

@@ -4,14 +4,13 @@
  * the Humm Accounts.
  *
  * For more information, read
- * {{link}}
+ * http://developers.myhumm.com/web/auth-guide#auth-code
  */
 
-var express = require('express'), // Express web server framewor
-    humm    = require('humm'), // Express web server framework
+var express = require('express'),
+    humm    = require('humm'),
     app     = express();
 
-app.set('view options', { layout: false });
 app.use(express.static(__dirname + '/public'));
 app.engine('html', require('ejs').renderFile);
 
