@@ -16,6 +16,7 @@ humm.init({
 });
 
 //request access token with code //TODO no response
+console.log('----------starting request------');
 humm.authViaClientCredentials(function(authErr, authRes) {
     console.log('------------- authViaClientCredentials complete -------------');
     console.log('authErr');

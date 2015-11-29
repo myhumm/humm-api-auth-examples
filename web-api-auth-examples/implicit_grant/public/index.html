@@ -3,7 +3,7 @@
   <head>
       <title>Example of the Implicit Grant flow with Humm</title>
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-      <script src="./sdk-0.0.3.js"></script>
+      <script src="https://cdn.rawgit.com/myhumm/humm-js-sdk/master/examples/sdk-0.0.4.js"></script>
     <style type="text/css">
       #login, #loggedin {
         display: none;
@@ -18,50 +18,51 @@
   </head>
 
   <body>
-    <div class="container">
+  <div class="container">
       <div id="login">
-        <h1>This is an example of the Implicit Grant flow</h1>
-        <button id="login-button" class="btn btn-primary">Log in with Humm</button>
+          <h1>This is an example of the Implicit Grant flow</h1>
+          <button id="login-button" class="btn btn-primary">Log in with Humm</button>
       </div>
       <div id="loggedin">
-        <div id="user-profile">
-        </div>
-        <div id="oauth">
-        </div>
+          <div id="user-profile">
+          </div>
+          <div id="oauth">
+          </div>
       </div>
-    </div>
+  </div>
 
-    <script id="user-profile-template" type="text/x-handlebars-template">
-        <h1>Logged in as {{email}}</h1>
+  <script id="user-profile-template" type="text/x-handlebars-template">
+      <h1>Logged in as {{email}}</h1>
 
-        <div class="media">
-            <div class="pull-left">
-                <img class="media-object" width="150" src="{{uavatar}}"/>
-            </div>
-            <div class="media-body">
-                <dl class="dl-horizontal">
-                    <dt>Display name</dt>
-                    <dd class="clearfix">{{uname}}</dd>
-                    <dt>Id</dt>
-                    <dd>{{id}}</dd>
-                    <dt>Email</dt>
-                    <dd>{{email}}</dd>
-                </dl>
-            </div>
-        </div>
-    </script>
+      <div class="media">
+          <div class="pull-left">
+              <img class="media-object" width="150" src="{{uavatar}}"/>
+          </div>
+          <div class="media-body">
+              <dl class="dl-horizontal">
+                  <dt>Display name</dt>
+                  <dd class="clearfix">{{uname}}</dd>
+                  <dt>Id</dt>
+                  <dd>{{id}}</dd>
+                  <dt>Email</dt>
+                  <dd>{{email}}</dd>
+              </dl>
+          </div>
+      </div>
+  </script>
 
-    <script id="oauth-template" type="text/x-handlebars-template">
+  <script id="oauth-template" type="text/x-handlebars-template">
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+          <dt>Access token</dt>
+          <dd class="text-overflow">{{access_token}}</dd>
       </dl>
-    </script>
+  </script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script>
-      (function() {
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script>
+      (function(){
 
           var userProfileSource = document.getElementById('user-profile-template').innerHTML,
               userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -73,15 +74,16 @@
 
           $('#login').show();
 
-          document.getElementById('login-button').addEventListener('click', function() {
+          document.getElementById('login-button').addEventListener('click', function(){
               // init humm  with client_id
-              humm.init({ client_id: '56570bacae8c5087411778a3' });
+              humm.init({client_id: '56570bacae8c5087411778a3'});
 
               //pop for user to login to humm account
-              humm.authViaImplicitGrant(function(error, response) {
+              humm.authViaImplicitGrant(function(error, response){
                   console.log('------------- authViaImplicitGrant complete -------------');
                   console.log(error);
                   console.log(response);
+
 
                   oauthPlaceholder.innerHTML = oauthTemplate({
                       access_token: response.access_token
@@ -107,7 +109,7 @@
               });
           }, false);
       })();
-    </script>
+  </script>
 
   </body>
 </html>

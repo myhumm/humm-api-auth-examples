@@ -1,22 +1,24 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Example of the Authorization Code flow with Humm</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://cdn.rawgit.com/myhumm/humm-js-sdk/master/examples/sdk-0.0.4.js"></script>
     <style type="text/css">
-      #login, #loggedin {
-        display: none;
-      }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
-    </style>
-  </head>
+        #login, #loggedin {
+            display: none;
+        }
 
-  <body>
+        .text-overflow {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
   <div class="container">
       <div id="login">
           <h1>This is an example of the Authorization Code flow</h1>
@@ -65,7 +67,6 @@
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="./sdk-0.0.3.js"></script>
   <script>
     // var authCred;
 
