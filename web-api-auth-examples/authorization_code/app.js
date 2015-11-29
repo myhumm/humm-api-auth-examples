@@ -8,14 +8,15 @@
  */
 
 var express = require('express'), // Express web server framewor
-    humm    = require('humm'), // Express web server framework,
-    request = require('request'), // "Request" library
+    humm    = require('humm'), // Express web server framework
     app     = express();
 
 app.set('view options', { layout: false });
 app.use(express.static(__dirname + '/public'));
 app.engine('html', require('ejs').renderFile);
 
+
+//Get Access token with auth code
 app.get('/access-token', function(req, res) {
   var code = req.query.code;
 
@@ -23,65 +24,46 @@ app.get('/access-token', function(req, res) {
     console.log(code);
 
   // init humm with client_id
-   /* humm.init({
+    humm.init({
         client_id: '56570bacae8c5087411778a3',
         client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
-    });*/
-
-    var authOptions = {
-        url: 'http://api.myhumm.com/token',
-        form: {
-            client_id: '56570bacae8c5087411778a3',
-            client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA=',
-            grant_type: 'authorization_code',
-            code: code
-        },
-      /*  headers: {
-            Authorization: 'Basic ' + (new Buffer('56570bacae8c5087411778a3:CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA=').toString('base64'))
-        },*/
-        json: true
-    };
-
-    request.post(authOptions, function(error, response, body){
-
-        console.log('error: ' + error);
-        console.log('response.statusCode: ' + response.statusCode);
-        console.log('body: ' + body);
-        console.log(response);
-/*    if(!error && response.statusCode === 200){
-
-            console.log('body');
-            console.log(body);
-            console.log(response);ß
-        }*/
-
     });
 
 
-/*
-   humm.accessViaCodeGrant(code, function(error, response) {
+    //request access token with code
+   humm.accessViaCodeGrant(code, function(authErr, authRes) {
     console.log('------------- accessViaCodeGrant complete -------------');
-    console.log(error);
-    console.log(response);
+    console.log('authErr');
+    console.log(authErr);
+    console.log('AuthRes');
+    console.log(authRes);
+
+       if(!authErr && authRes) {
+
+           /** Sample auth res:
+            * { access_token: '565b0c78015f91c91a9882ea',
+                expires_in: 2592000,
+                token_type: 'Bearer',
+                refresh_token: 'c4be4384dea6c19c7cc37206d2b6aac4c4be4384dea6c19c7cc37206d2b6aac4',
+                scope: null }
+            *
+            */
+           //set token before request
+           humm.setAccessToken(authRes.access_token);
+           //get current user
+           humm.users.me(function(meErr, meRes){
+               console.log('--------------------- users.me()----------');
+               console.log(meErr);
+               console.log(meRes);
+               //send response back
+               res.send({ auth: authRes,  me: meRes });
+           });
+       }else {
+           console.log(authErr);
+           console.log(authRes);
+         //  throw new Error('Authorization attempt failed');
+       }
   });
-*/
-
-
-
-
-
-/*    humm.authViaClientCredentials( function(error, response) {
-    console.log('------------- authViaClientCredentials complete -------------');
-    console.log(error);
-    console.log(response);
-  });*/
-
-  /*  humm.radio(function(error, response) {
-    console.log('------------- accessViaCodeGrant complete -------------');
-    console.log(error);
-    console.log(response);
-  })*/
-
 });
 
 //get code or token from window.location and extract keys and stores in localstorage
@@ -94,25 +76,21 @@ app.get('/refresh_token', function(req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
 
+    console.log('------------Requesting refresh_token ------------');
+    console.log(refresh_token);
 
-/*  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
+    // init humm with client_id
+    humm.init({
+        client_id: '56570bacae8c5087411778a3',
+        client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
+    });
 
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });*/
+    humm.refreshAccessToken(refresh_token, function(reErr, reRes){
+        console.log('--------------------- refresh_token()----------');
+        console.log(reErr);
+        console.log(reRes);
+        res.send(reRes.data_response);
+    });
 });
 
 console.log('Listening on 3000');
