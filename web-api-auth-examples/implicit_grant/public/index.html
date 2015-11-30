@@ -3,7 +3,7 @@
   <head>
       <title>Example of the Implicit Grant flow with Humm</title>
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-      <script src="https://cdn.rawgit.com/myhumm/humm-js-sdk/master/examples/sdk-0.0.4.js"></script>
+      <script src="https://rawgit.com/myhumm/humm-js-sdk/master/examples/sdk-0.0.4.js"></script>
     <style type="text/css">
       #login, #loggedin {
         display: none;
@@ -72,19 +72,49 @@
               oauthTemplate = Handlebars.compile(oauthSource),
               oauthPlaceholder = document.getElementById('oauth');
 
-          $('#login').show();
+          // init humm  with client_id
+          humm.init({client_id: '56570bacae8c5087411778a3'});
 
+          //check if used isAuthorised
+          if(humm.isAuthorised()){
+              // get user
+              humm.users.me(function(err, res){
+                  console.log(err);
+                  console.log(res);
+                  // if response is ok then we still have a valid token otherwise ask user to login again
+                  if(!err && res.status_response === 'ok') {
+                      var account = res.data_response.account;
+                      userProfilePlaceholder.innerHTML = userProfileTemplate({
+                          uname: account.uname,
+                          id: res.data_response._id,
+                          uavatar: account.uavatar,
+                          bio: account.bio,
+                          email: account.email
+                      });
+                      console.log('--------------------- users.me()----------');
+                      console.log(res);
+
+                      oauthPlaceholder.innerHTML = oauthTemplate({
+                          access_token: humm.getAccessToken()
+                      });
+
+                      $('#loggedin').show();
+                  } else {
+                      $('#login').show();
+                  }
+              });
+          } else {
+              $('#login').show();
+          }
+
+          //login listener
           document.getElementById('login-button').addEventListener('click', function(){
-              // init humm  with client_id
-              humm.init({client_id: '56570bacae8c5087411778a3'});
 
               //pop for user to login to humm account
               humm.authViaImplicitGrant(function(error, response){
                   console.log('------------- authViaImplicitGrant complete -------------');
                   console.log(error);
                   console.log(response);
-
-
                   oauthPlaceholder.innerHTML = oauthTemplate({
                       access_token: response.access_token
                   });
@@ -105,9 +135,9 @@
                       $('#login').hide();
                       $('#loggedin').show();
                   });
-
               });
           }, false);
+
       })();
   </script>
 

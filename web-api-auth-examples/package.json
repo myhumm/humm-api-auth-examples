@@ -7,6 +7,6 @@
   "dependencies": {
     "ejs": "^2.3.4",
     "express": "~4.0.0",
-    "humm": "0.0.4"
+    "humm": "file:humm-0.0.4.tgz"
   }
 }
