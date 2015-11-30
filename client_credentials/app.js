@@ -15,7 +15,7 @@ humm.init({
     client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
 });
 
-//request access token with code //TODO no response
+//request access token with code
 console.log('----------starting request------');
 humm.authViaClientCredentials(function(err, res) {
     console.log('------------- authViaClientCredentials complete -------------');
