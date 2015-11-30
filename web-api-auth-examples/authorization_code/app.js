@@ -38,7 +38,6 @@ app.get('/access-token', function(req, res) {
     console.log(authRes);
 
        if(!authErr && authRes) {
-
            /** Sample auth res:
             * { access_token: '565b0c78015f91c91a9882ea',
                 expires_in: 2592000,
@@ -54,6 +53,7 @@ app.get('/access-token', function(req, res) {
                console.log('--------------------- users.me()----------');
                console.log(meErr);
                console.log(meRes);
+
                //send response back
                res.send({ auth: authRes,  me: meRes });
            });
@@ -94,3 +94,6 @@ app.get('/refresh_token', function(req, res) {
 
 console.log('Listening on 3000');
 app.listen(3000);
+
+
+
