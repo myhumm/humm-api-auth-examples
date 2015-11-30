@@ -7,7 +7,7 @@
  * http://developers.myhumm.com/web/auth-guide#auth-client
  */
 
-humm    = require('humm');
+humm = require('humm');
 
 // init humm with client_id
 humm.init({
@@ -17,12 +17,21 @@ humm.init({
 
 //request access token with code //TODO no response
 console.log('----------starting request------');
-humm.authViaClientCredentials(function(authErr, authRes) {
+humm.authViaClientCredentials(function(err, res) {
     console.log('------------- authViaClientCredentials complete -------------');
     console.log('authErr');
-    console.log(authErr);
+    console.log(err);
     console.log('AuthRes');
-    console.log(authRes);
+    console.log(res);
+
+    //set token for future request
+    humm.setAccessToken(res.data_response.access_token);
+
+    //make authorised here....
+
 });
+
+
+
 
 
