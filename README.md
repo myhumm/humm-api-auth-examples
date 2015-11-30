@@ -22,7 +22,7 @@ In order to run the different examples, open the folder with the name of the flo
     $ cd authorization_code
     $ node app.js
 
-Then, open `http://localhost:3000` in a browser.
+Then, open `http:/127.0.0.1:3000` in a browser.
 
 ### Using your own credentials
 The examples contains a working client ID and secret key. Note, however, that they might be rate limited if they are used frequently. If you are planning to create an application, we recommend you register your app and get your own credentials instead of using the ones in this project.
