@@ -1,6 +1,6 @@
 # Humm Accounts Authentication Examples
 
-This project contains basic demos showing the different OAuth 2.0 flows for [authenticating against the Humm Web API](http://developers.myhumm.com/web/auth-guide).
+This project contains basic demos showing the different OAuth 2.0 flows for [authenticating against the Humm Web API](http://developers.myhumm.com/web/auth-guide) using Humm Javascript SDK
 
 These examples cover:
 
@@ -14,7 +14,7 @@ These examples run on Node.js. On [its website](http://www.nodejs.org/download/)
 
 Once installed, clone the repository and install its dependencies running:
 
-    $ npm install
+    $ npm install humm
 
 ## Running the examples
 In order to run the different examples, open the folder with the name of the flow you want to try out, and run its `app.js` file. For instance, to run the Authorization Code example do:
