@@ -14,7 +14,7 @@ These examples run on Node.js.[website](http://www.nodejs.org/download/) you can
 
 Once installed, clone the repository and install its dependencies running:
 
-    $ npm install humm
+    $ npm install
 
 ## Running the examples
 In order to run the different examples, open the folder with the name of the flow you want to try out, and run its `app.js` file. For instance, to run the Authorization Code example do:
