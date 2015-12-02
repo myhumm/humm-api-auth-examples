@@ -11,6 +11,9 @@ var express = require('express'),
     humm    = require('humm'),
     app     = express();
 
+var client_id = '56570bacae8c5087411778a3';
+var client_secret = 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA=';
+
 app.use(express.static(__dirname + '/public'));
 app.engine('html', require('ejs').renderFile);
 
@@ -24,8 +27,8 @@ app.get('/access-token', function(req, res) {
 
   // init humm with client_id
     humm.init({
-        client_id: '56570bacae8c5087411778a3',
-        client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
+        client_id: client_id,
+        client_secret: client_secret
     });
 
 
@@ -80,8 +83,8 @@ app.get('/refresh_token', function(req, res) {
 
     // init humm with client_id
     humm.init({
-        client_id: '56570bacae8c5087411778a3',
-        client_secret: 'CdNX3TcLc/OF3k2oIogwlBi/rCZOP0LSfLxrRjoX5EA='
+        client_id: client_id,
+        client_secret: client_secret
     });
 
     humm.refreshAccessToken(refresh_token, function(reErr, reRes){
